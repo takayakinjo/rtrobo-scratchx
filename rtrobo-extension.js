@@ -20,7 +20,7 @@ new (function() {
     let ext_ = this;
 
     // Extension name
-    let name = 'RtRobo Coltroller';
+    let name = 'RtRobo Controller';
 
     // Block and block menu descriptions
     let descriptor = {
