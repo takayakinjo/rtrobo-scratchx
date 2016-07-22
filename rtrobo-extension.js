@@ -25,10 +25,10 @@ new (function() {
     // Block and block menu descriptions
     let descriptor = {
         blocks: [
-            ['w', 'connect to %s', 'connect'],
-            ['w', 'disconnect', 'disconnect'],
+            ['w', '%sにせつぞく', 'connect'],
+            ['w', 'せつだん', 'disconnect'],
             [ '', 'まえ', 'send_eject'],
-            [ '', 'close drive', 'send_close'],
+            [ '', 'うしろ', 'send_close'],
             ['h', 'when disc ejected', 'onDiskEjected'],
             ['h', 'when drive closed', 'onDriveClosed'],
         ]
@@ -38,8 +38,10 @@ new (function() {
     let eject_ext_init = function(ext) {
 
         ext.send_eject = function() {
-            let data = {command: 'eject'};
-            ext.api.send(JSON.stringify(data), null);
+            //let data = {command: 'eject'};
+            //ext.api.send(JSON.stringify(data), null);
+            let data = "RRFWD";
+            ext.api.send(data, null);
         };
 
         ext.send_close = function() {
