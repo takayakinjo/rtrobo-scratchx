@@ -27,24 +27,23 @@ new (function() {
         blocks: [
             ['w', '%s にせつぞく', 'connect'],
             ['w', 'せつだん', 'disconnect'],
-            [ '', 'まえに一歩', 'send_eject'],
-            [ '', 'うしろに一歩', 'send_close'],
+            [ '', 'まえに一歩', 'move_forward'],
+            [ '', 'うしろに一歩', 'move_back'],
             ['h', 'when disc ejected', 'onDiskEjected'],
             ['h', 'when drive closed', 'onDriveClosed'],
         ]
     };
 
 
-    let eject_ext_init = function(ext) {
+    let rtrobo_ext_init = function(ext) {
 
-        ext.send_eject = function() {
+        ext.move_forward = function() {
             //let data = {command: 'eject'};
             //ext.api.send(JSON.stringify(data), null);
-            let data = "RRFWD";
-            ext.api.send(data, null);
+            ext.api.send("RRFWD", null);
         };
 
-        ext.send_close = function() {
+        ext.move_back = function() {
             ext.api.send("RRBACK", null);
         };
 
@@ -81,7 +80,7 @@ new (function() {
         .done( function(ws_ext, textStatus) {
             let eventTarget = document.createDocumentFragment();
             ws_ext_init(ext_, eventTarget);
-            eject_ext_init(ext_);
+            rtrobo_ext_init(ext_);
         });
 
 })();
