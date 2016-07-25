@@ -55,7 +55,12 @@ new (function() {
         });
 
         ext.api.addEventListener('message-received', function(event) {
-            let recv = JSON.parse(event.data);
+            //let recv = JSON.parse(event.data);
+            let recv = event.data;
+
+	    console.log('Received: ' + recv);
+
+	    
             if(recv.status != undefined) {
 		curr_state = recv.status;
             }
