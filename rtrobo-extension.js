@@ -49,12 +49,9 @@ new (function() {
         ext.move_forward_test = function(callback) {
             ext.api.send("RRFWD", null);
 
-	    while(1) {
-		if (recvMsg != '') break;
-	    }
-	    callback();
-	    
-        };
+	    setTimeout(function(){callback();}, 3000);
+
+	};
 
         ext.move_back = function() {
             ext.api.send("RRBACK", null);
