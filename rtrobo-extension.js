@@ -50,7 +50,7 @@ new (function() {
             ext.api.send("RRFWD", null);
 
 	    while(1) {
-		if (recvMsg == "OK") break;
+		if (recvMsg != '') break;
 	    }
 	    callback();
 	    
