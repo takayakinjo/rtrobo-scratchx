@@ -27,8 +27,9 @@ new (function() {
         blocks: [
             ['w', '%s にせつぞく', 'connect'],
             ['w', 'せつだん', 'disconnect'],
-            [ '', 'まえに一歩', 'move_forward'],
-            [ '', 'うしろに一歩', 'move_back'],
+            ['', 'まえに一歩', 'move_forward'],
+            ['w', 'test', 'move_forward_test'],
+            ['', 'うしろに一歩', 'move_back'],
             ['h', 'when disc ejected', 'onDiskEjected'],
             ['h', 'when drive closed', 'onDriveClosed'],
         ]
@@ -37,10 +38,22 @@ new (function() {
 
     let rtrobo_ext_init = function(ext) {
 
+	let recvMsg = '';
+
         ext.move_forward = function() {
             //let data = {command: 'eject'};
             //ext.api.send(JSON.stringify(data), null);
             ext.api.send("RRFWD", null);
+        };
+
+        ext.move_forward_test = function(callback) {
+            ext.api.send("RRFWD", null);
+
+	    while(1) {
+		if (recvMsg == "OK") break;
+	    }
+	    callback();
+	    
         };
 
         ext.move_back = function() {
@@ -49,7 +62,7 @@ new (function() {
 
 	let prev_state = '';
 	let curr_state = '';
-
+	
         ext.api.setInternalEventCheckHook( function(event) {
             return true;
         });
@@ -60,6 +73,7 @@ new (function() {
 
 	    console.log('Received: ' + recv);
 
+	    recvMsg = recv;
 	    
             if(recv.status != undefined) {
 		curr_state = recv.status;
@@ -73,6 +87,9 @@ new (function() {
             }
             return false;
         };
+
+	ext.getMsg = function() { return recvMsg; }
+	
         ext.onDiskEjected = function() { return state_check('ejected'); }
         ext.onDriveClosed = function() { return state_check('closed'); }
 
