@@ -84,23 +84,20 @@ new (function() {
         ext.onDriveClosed = function() { return state_check('closed'); }
 
 
-	function checkMsg(callback) {
-
-	    if (recvMsg != '')
-		callback();
-	    else {
-		setTimeout(function(){checkMsg(callback)}, 1000);
-		console.log('checkMsg');
-	    }
-	}
-	
 	ext.move_forward_test = function(callback) {
             ext.api.send("RRFWD", null);
 
-	    checkMsg(callback);
-	    //callback();
-	};
+	    checkMsg = function() {
 
+		if (recvMsg != '')
+		    callback();
+		else {
+		    setTimeout(function(){checkMsg()}, 1000);
+		    console.log('checkMsg');
+		}
+	    }
+	};
+	
         // Register the extension
         ScratchExtensions.register(name, descriptor, ext);
     };
