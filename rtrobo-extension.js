@@ -27,9 +27,8 @@ new (function() {
         blocks: [
             ['w', '%s にせつぞく', 'connect'],
             ['w', 'せつだん', 'disconnect'],
-            ['', 'まえに一歩', 'move_forward'],
-            ['w', 'test', 'move_forward_test'],
-            ['', 'うしろに一歩', 'move_back'],
+            ['w', 'まえに一歩', 'move_forward'],
+            ['w', 'うしろに一歩', 'move_back'],
             ['h', 'when disc ejected', 'onDiskEjected'],
             ['h', 'when drive closed', 'onDriveClosed'],
         ]
@@ -39,27 +38,23 @@ new (function() {
 
 	let recvMsg = '';
 
-        ext.move_forward = function() {
+        //ext.move_forward = function() {
             //let data = {command: 'eject'};
             //ext.api.send(JSON.stringify(data), null);
-            ext.api.send("RRFWD", null);
-        };
+        //    ext.api.send("RRFWD", null);
+        //};
 
 
-	ext.move_forward_test = function(callback) {
+	ext.move_forward = function(callback) {
             ext.api.send("RRFWD", null);
 
 	    checkMsg = function() {
-
-		console.log('checkMsg');
-
 		if (recvMsg == 'OK') {
 		    console.log('Got OK');
 		    recvMsg = '';
 		    callback();
-		}
-		else {
-		    setTimeout(function(){checkMsg()}, 1000);
+		} else {
+		    setTimeout(function(){checkMsg()}, 100);
 		}
 	    };
 	    checkMsg();
@@ -68,6 +63,17 @@ new (function() {
 
         ext.move_back = function() {
             ext.api.send("RRBACK", null);
+
+	    checkMsg = function() {
+		if (recvMsg == 'OK') {
+		    console.log('Got OK');
+		    recvMsg = '';
+		    callback();
+		} else {
+		    setTimeout(function(){checkMsg()}, 100);
+		}
+	    };
+	    checkMsg();
         };
 
 	let prev_state = '';
