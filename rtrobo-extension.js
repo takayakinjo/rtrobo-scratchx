@@ -54,7 +54,8 @@ new (function() {
 		console.log('checkMsg');
 
 		if (recvMsg == 'OK') {
-		    //recvMsg = '';
+		    console.log('Got OK');
+		    recvMsg = '';
 		    callback();
 		}
 		else {
