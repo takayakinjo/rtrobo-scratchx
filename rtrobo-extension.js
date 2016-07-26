@@ -49,7 +49,12 @@ new (function() {
         ext.move_forward_test = function(callback) {
             ext.api.send("RRFWD", null);
 
-	    //setTimeout(function(){callback();}, 5000);
+	    setTimeout(function(){callback();}, 10000); // WDT
+
+	    while(1) {
+		if (recvMsg != '') break;
+	    }
+
 	    //ext.api.getMessage(null);
 	    callback();
 	};
