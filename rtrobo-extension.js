@@ -60,7 +60,7 @@ new (function() {
 		else {
 		    setTimeout(function(){checkMsg()}, 1000);
 		}
-	    }
+	    };
 	};
 	
 
