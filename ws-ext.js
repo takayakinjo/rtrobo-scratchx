@@ -275,6 +275,8 @@ function ws_ext_init(ext, emitter) {
         return null; 
     };
 
+    ext.api.getMessage = ext.getMessage;
+    
     ext.getLastReceivedMessageOrigin = function() {
         console.log("ext.getLastReceivedMessageOrigin");
         if(received_event.length == 0) 
