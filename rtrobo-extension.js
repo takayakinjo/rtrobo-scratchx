@@ -84,12 +84,12 @@ new (function() {
         ext.onDriveClosed = function() { return state_check('closed'); }
 
 
-	function checkMsg() {
+	function checkMsg(callback) {
 
 	    if (recvMsg != '')
 		callback();
 	    else {
-		setTimeout(function(){checkMsg()}, 1000);
+		setTimeout(function(){checkMsg(callback)}, 1000);
 		console.log('checkMsg');
 	    }
 	}
@@ -97,7 +97,7 @@ new (function() {
 	ext.move_forward_test = function(callback) {
             ext.api.send("RRFWD", null);
 
-	    checkMsg();
+	    checkMsg(callback);
 	    //callback();
 	};
 
