@@ -61,6 +61,7 @@ new (function() {
 		    setTimeout(function(){checkMsg()}, 1000);
 		}
 	    };
+	    checkMsg();
 	};
 	
 
