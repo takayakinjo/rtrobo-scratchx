@@ -35,7 +35,6 @@ new (function() {
         ]
     };
 
-
     let rtrobo_ext_init = function(ext) {
 
 	let recvMsg = '';
@@ -46,18 +45,6 @@ new (function() {
             ext.api.send("RRFWD", null);
         };
 
-        ext.move_forward_test = function(callback) {
-            ext.api.send("RRFWD", null);
-
-	    setTimeout(function(){callback();}, 10000); // WDT
-
-	    while(1) {
-		if (recvMsg != '') break;
-	    }
-
-	    //ext.api.getMessage(null);
-	    callback();
-	};
 
         ext.move_back = function() {
             ext.api.send("RRBACK", null);
@@ -95,6 +82,19 @@ new (function() {
 	
         ext.onDiskEjected = function() { return state_check('ejected'); }
         ext.onDriveClosed = function() { return state_check('closed'); }
+
+	ext.move_forward_test = function(callback) {
+            ext.api.send("RRFWD", null);
+	    
+	    setTimeout(function(){callback();}, 10000); // WDT
+	    
+	    while(1) {
+		if (recvMsg != '') break;
+	    }
+	    
+	    //ext.api.getMessage(null);
+	    callback();
+	};
 
         // Register the extension
         ScratchExtensions.register(name, descriptor, ext);
