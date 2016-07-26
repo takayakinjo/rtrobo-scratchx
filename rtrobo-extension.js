@@ -61,7 +61,7 @@ new (function() {
 	};
 	
 
-        ext.move_back = function() {
+        ext.move_back = function(callback) {
             ext.api.send("RRBACK", null);
 
 	    checkMsg = function() {
