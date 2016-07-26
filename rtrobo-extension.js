@@ -89,8 +89,10 @@ new (function() {
 
 	    checkMsg = function() {
 
-		if (recvMsg != '')
+		if (recvMsg == 'OK') {
+		    recvMsg = '';
 		    callback();
+		}
 		else {
 		    setTimeout(function(){checkMsg()}, 1000);
 		    console.log('checkMsg');
