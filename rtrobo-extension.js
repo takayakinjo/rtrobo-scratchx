@@ -83,17 +83,23 @@ new (function() {
         ext.onDiskEjected = function() { return state_check('ejected'); }
         ext.onDriveClosed = function() { return state_check('closed'); }
 
+
+	let checkMsg = function() {
+
+	    setTimeout(function(){
+		
+		if (recvMsg != '') callback();
+		else checkMsg();
+		
+	    }, 1000); // WDT
+
+	};
+	
 	ext.move_forward_test = function(callback) {
             ext.api.send("RRFWD", null);
-	    
-	    setTimeout(function(){callback();}, 10000); // WDT
-	    
-	    while(1) {
-		if (recvMsg != '') break;
-	    }
-	    
-	    //ext.api.getMessage(null);
-	    callback();
+
+	    checkMsg();
+	    //callback();
 	};
 
         // Register the extension
