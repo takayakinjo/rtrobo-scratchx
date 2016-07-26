@@ -51,6 +51,7 @@ new (function() {
 
 	    //setTimeout(function(){callback();}, 5000);
 	    ext.api.getMessage(null);
+	    callback();
 	};
 
         ext.move_back = function() {
