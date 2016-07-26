@@ -51,12 +51,13 @@ new (function() {
 
 	    checkMsg = function() {
 
+		console.log('checkMsg');
+
 		if (recvMsg == 'OK') {
-		    recvMsg = '';
+		    //recvMsg = '';
 		    callback();
 		}
 		else {
-		    console.log('checkMsg');
 		    setTimeout(function(){checkMsg()}, 1000);
 		}
 	    }
