@@ -50,7 +50,7 @@ new (function() {
             ext.api.send("RRFWD", null);
 
 	    //setTimeout(function(){callback();}, 5000);
-	    ext.api.getMessage();
+	    ext.api.getMessage(null);
 	};
 
         ext.move_back = function() {
