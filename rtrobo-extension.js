@@ -88,9 +88,10 @@ new (function() {
 
 	    if (recvMsg != '')
 		callback();
-	    else
+	    else {
 		setTimeout(function(){checkMsg()}, 1000);
-	    
+		console.log('checkMsg');
+	    }
 	}
 	
 	ext.move_forward_test = function(callback) {
