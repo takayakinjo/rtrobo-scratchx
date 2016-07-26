@@ -84,16 +84,14 @@ new (function() {
         ext.onDriveClosed = function() { return state_check('closed'); }
 
 
-	let checkMsg = function() {
+	function checkMsg() {
 
-	    setTimeout(function(){
-		
-		if (recvMsg != '') callback();
-		else checkMsg();
-		
-	    }, 1000); // WDT
-
-	};
+	    if (recvMsg != '')
+		callback();
+	    else
+		setTimeout(function(){checkMsg()}, 1000);
+	    
+	}
 	
 	ext.move_forward_test = function(callback) {
             ext.api.send("RRFWD", null);
