@@ -35,7 +35,7 @@ new (function() {
             ['w', 'きりつ', 'neutral'],
             ['w', 'すわる', 'sit_down'],
             [' ', '%s と言う', 'speak'],
-	    ['r', 'きょりが %n cm より %m.lessMore とき', 'getDistance', 20, '近い'],
+	    ['b', 'きょりが %n cm より %m.lessMore とき', 'getDistance', 20, '近い'],
         ],
 	menus: {
             motorDirection: ['this way', 'that way', 'reverse'],
@@ -152,7 +152,14 @@ new (function() {
 
         ext.getDistance = function(dist, lessMore) {
             ext.api.send("RRGETDST:" + dist + ":" + lessMore, null);
-        };
+
+	    // TESTCODE
+	    if (dist > 20)
+		return true;
+	    else
+		return false;
+	    
+	};
 
 	let prev_state = '';
 	let curr_state = '';
