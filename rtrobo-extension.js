@@ -29,14 +29,19 @@ new (function() {
             ['w', 'せつだん', 'disconnect'],
             ['w', 'まえに一歩', 'move_forward'],
             ['w', 'うしろに一歩', 'move_back'],
-            ['w', '右に %d 度まわる', 'turn_right'],
-            ['w', '左に %d 度まわる', 'turn_left'],
+            ['w', '右に %n 度まわる', 'turn_right', 90],
+            ['w', '左に %n 度まわる', 'turn_left', 90],
             ['w', 'くっしん', 'bend'],
             ['w', 'きりつ', 'neutral'],
+            ['w', 'すわる', 'sit_down'],
             [' ', '%s と言う', 'speak'],
-            ['h', 'when disc ejected', 'onDiskEjected'],
-            ['h', 'when drive closed', 'onDriveClosed'],
-        ]
+	    ['r', 'きょりが %n cm より %m.lessMore とき', 'getDistance', 20, '近い'],
+        ],
+	menus: {
+            motorDirection: ['this way', 'that way', 'reverse'],
+            lessMore: ['近い', '遠い'],
+            eNe: ['=','not =']
+	},
     };
 
     let rtrobo_ext_init = function(ext) {
@@ -143,6 +148,10 @@ new (function() {
 
         ext.speak = function(string) {
             ext.api.send("RRSPK:" + string, null);
+        };
+
+        ext.getDistance = function(dist, lessMore) {
+            ext.api.send("RRGETDST:" + dist + ":" + lessMore, null);
         };
 
 	let prev_state = '';
