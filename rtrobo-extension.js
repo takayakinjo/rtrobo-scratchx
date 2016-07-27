@@ -29,8 +29,11 @@ new (function() {
             ['w', 'せつだん', 'disconnect'],
             ['w', 'まえに一歩', 'move_forward'],
             ['w', 'うしろに一歩', 'move_back'],
+            ['w', '右に %d 度まわる', 'turn_right'],
+            ['w', '左に %d 度まわる', 'turn_left'],
             ['w', 'くっしん', 'bend'],
             ['w', 'きりつ', 'neutral'],
+            [' ', '%s と言う', 'speak'],
             ['h', 'when disc ejected', 'onDiskEjected'],
             ['h', 'when drive closed', 'onDriveClosed'],
         ]
@@ -106,6 +109,40 @@ new (function() {
 		}
 	    };
 	    checkMsg();
+        };
+
+        ext.turn_right = function(deg, callback) {
+            ext.api.send("RRTRNR:"+deg, null);
+
+	    checkMsg = function() {
+		if (recvMsg == 'OK') {
+		    console.log('Got OK');
+		    recvMsg = '';
+		    callback();
+		} else {
+		    setTimeout(function(){checkMsg()}, 100);
+		}
+	    };
+	    checkMsg();
+        };
+
+        ext.turn_left = function(deg, callback) {
+            ext.api.send("RRTRNL:"+deg, null);
+
+	    checkMsg = function() {
+		if (recvMsg == 'OK') {
+		    console.log('Got OK');
+		    recvMsg = '';
+		    callback();
+		} else {
+		    setTimeout(function(){checkMsg()}, 100);
+		}
+	    };
+	    checkMsg();
+        };
+
+        ext.speak = function(string) {
+            ext.api.send("RRSPK:" + string, null);
         };
 
 	let prev_state = '';
