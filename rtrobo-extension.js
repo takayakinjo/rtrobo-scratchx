@@ -29,16 +29,18 @@ new (function() {
             ['w', 'せつだん', 'disconnect'],
             ['w', 'まえに一歩', 'move_forward'],
             ['w', 'うしろに一歩', 'move_back'],
-            ['w', '右に %n 度まわる', 'turn_right', 90],
-            ['w', '左に %n 度まわる', 'turn_left', 90],
+            ['w', '%m.rightLeft に %n 度まわる', 'turn', '右', 90],
             ['w', 'くっしん', 'bend'],
             ['w', 'きりつ', 'neutral'],
             ['w', 'すわる', 'sit_down'],
+            [' ', '%m.hands を %m.upDown', 'move_hand', '右手', 'あげる'],
             [' ', '%s と言う', 'speak'],
 	    ['b', 'きょりが %n cm より %m.lessMore とき', 'getDistance', 20, '近い'],
         ],
 	menus: {
-            motorDirection: ['this way', 'that way', 'reverse'],
+            rightLeft: ['右', '左'],
+            hands: ['右手', '左手'],
+            upDown: ['あげる', 'さげる'],
             lessMore: ['近い', '遠い'],
             eNe: ['=','not =']
 	},
@@ -53,7 +55,6 @@ new (function() {
             //ext.api.send(JSON.stringify(data), null);
         //    ext.api.send("RRFWD", null);
         //};
-
 
 	ext.move_forward = function(callback) {
             ext.api.send("RRFWD", null);
@@ -116,8 +117,8 @@ new (function() {
 	    checkMsg();
         };
 
-        ext.turn_right = function(deg, callback) {
-            ext.api.send("RRTRNR:"+deg, null);
+        ext.sit_down = function(callback) {
+            ext.api.send("RRCTDN", null);
 
 	    checkMsg = function() {
 		if (recvMsg == 'OK') {
@@ -131,8 +132,8 @@ new (function() {
 	    checkMsg();
         };
 
-        ext.turn_left = function(deg, callback) {
-            ext.api.send("RRTRNL:"+deg, null);
+        ext.turn = function(dir, deg, callback) {
+            ext.api.send("RRTURN:"+dir+":"+deg, null);
 
 	    checkMsg = function() {
 		if (recvMsg == 'OK') {
@@ -150,8 +151,11 @@ new (function() {
             ext.api.send("RRSPK:" + string, null);
         };
 
+        ext.move_hand = function(dir, upDown) {
+            ext.api.send("RRHND:" + dir + ":" + upDown, null);
+        };
+
         ext.getDistance = function(dist, lessMore) {
-            ext.api.send("RRGETDST:" + dist + ":" + lessMore, null);
 
 	    // TESTCODE
 	    if (dist > 20)
