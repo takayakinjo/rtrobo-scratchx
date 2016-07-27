@@ -29,6 +29,8 @@ new (function() {
             ['w', 'せつだん', 'disconnect'],
             ['w', 'まえに一歩', 'move_forward'],
             ['w', 'うしろに一歩', 'move_back'],
+            ['w', 'くっしん', 'bend'],
+            ['w', 'きりつ', 'neutral'],
             ['h', 'when disc ejected', 'onDiskEjected'],
             ['h', 'when drive closed', 'onDriveClosed'],
         ]
@@ -63,6 +65,36 @@ new (function() {
 
         ext.move_back = function(callback) {
             ext.api.send("RRBACK", null);
+
+	    checkMsg = function() {
+		if (recvMsg == 'OK') {
+		    console.log('Got OK');
+		    recvMsg = '';
+		    callback();
+		} else {
+		    setTimeout(function(){checkMsg()}, 100);
+		}
+	    };
+	    checkMsg();
+        };
+
+        ext.bend = function(callback) {
+            ext.api.send("RRBEND", null);
+
+	    checkMsg = function() {
+		if (recvMsg == 'OK') {
+		    console.log('Got OK');
+		    recvMsg = '';
+		    callback();
+		} else {
+		    setTimeout(function(){checkMsg()}, 100);
+		}
+	    };
+	    checkMsg();
+        };
+
+        ext.neutral = function(callback) {
+            ext.api.send("RRNTRL", null);
 
 	    checkMsg = function() {
 		if (recvMsg == 'OK') {
