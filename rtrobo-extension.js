@@ -30,7 +30,7 @@ new (function() {
 	var pair = vars[i].split('=');
 	if (pair.length > 1 && pair[0]=='lang') {
 	    lang = pair[1];
-	    alert(lang);
+//	    alert(lang);
 	}
     }
     
@@ -65,8 +65,8 @@ new (function() {
     var menus = {
 	en: {
             rightLeft: ['right', 'left'],
-            hands: ['right hand', 'left hand'],
-            upDown: ['up', 'dowm'],
+            hands: ['Right hand', 'Left hand'],
+            upDown: ['up', 'down'],
             lessMore: ['nearer', 'farther'],
             eNe: ['=','not =']
 	},
