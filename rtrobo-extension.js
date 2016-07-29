@@ -17,10 +17,10 @@
 */
 
 new (function() {
-    let ext_ = this;
+    var ext_ = this;
 
     // Extension name
-    let name = 'RtRobo Controller';
+    var name = 'RtRobo Controller';
 
     // Check for GET param 'lang'
     var paramString = window.location.search.replace(/^\?|\/$/g, '');
@@ -36,7 +36,7 @@ new (function() {
     
     var blocks = {
         en: [
-            ['w', 'Connect to %s', 'connect'],
+            ['w', 'Connect to %s', 'connect', 'ws://localhost:9000/rtrobo'],
             ['w', 'Disconnect', 'disconnect'],
             ['w', 'Step forward', 'move_forward'],
             ['w', 'Step Backward', 'move_back'],
@@ -45,11 +45,11 @@ new (function() {
             ['w', 'Stand up', 'neutral'],
             ['w', 'Sit down', 'sit_down'],
             [' ', 'Move %m.upDown %m.hands', 'move_hand', 'Up', 'Right hand'],
-            [' ', 'say %s', 'speak'],
+            [' ', 'say %s', 'speak', 'hello'],
 	    ['b', 'If distance is %m.lessMore than %n cm', 'getDistance', 'nearer', 20],
         ],
         ja: [
-            ['w', '%s にせつぞく', 'connect'],
+            ['w', '%s にせつぞく', 'connect', 'ws://localhost:9000/rtrobo'],
             ['w', 'せつだん', 'disconnect'],
             ['w', 'まえに一歩', 'move_forward'],
             ['w', 'うしろに一歩', 'move_back'],
@@ -58,7 +58,7 @@ new (function() {
             ['w', 'きりつ', 'neutral'],
             ['w', 'すわる', 'sit_down'],
             [' ', '%m.hands を %m.upDown', 'move_hand', '右手', 'あげる'],
-            [' ', '%s と言う', 'speak'],
+            [' ', '%s と言う', 'speak', 'こんにちは'],
 	    ['b', 'きょりが %n cm より %m.lessMore とき', 'getDistance', 20, '近い'],
         ]
     };
@@ -80,17 +80,17 @@ new (function() {
     };
 
     // Block and block menu descriptions
-    let descriptor = {
+    var descriptor = {
         blocks: blocks[lang],
 	menus: menus[lang]
     };
 
-    let rtrobo_ext_init = function(ext) {
+    var rtrobo_ext_init = function(ext) {
 
-	let recvMsg = '';
+	var recvMsg = '';
 
         //ext.move_forward = function() {
-            //let data = {command: 'eject'};
+            //var data = {command: 'eject'};
             //ext.api.send(JSON.stringify(data), null);
         //    ext.api.send("RRFWD", null);
         //};
@@ -204,16 +204,16 @@ new (function() {
 	    
 	};
 
-	let prev_state = '';
-	let curr_state = '';
+	var prev_state = '';
+	var curr_state = '';
 	
         ext.api.setInternalEventCheckHook( function(event) {
             return true;
         });
 
         ext.api.addEventListener('message-received', function(event) {
-            //let recv = JSON.parse(event.data);
-            let recv = event.data;
+            //var recv = JSON.parse(event.data);
+            var recv = event.data;
 
 	    console.log('Received: ' + recv);
 
@@ -224,7 +224,7 @@ new (function() {
             }
         });
 
-	let state_check = function(check_state) {
+	var state_check = function(check_state) {
 	    if(prev_state != curr_state && curr_state == check_state) {
 		prev_state = curr_state;
                 return true;
@@ -241,10 +241,10 @@ new (function() {
         ScratchExtensions.register(name, descriptor, ext);
     };
 
-    let scriptpath = document.currentScript.src.match(/.*\//);
+    var scriptpath = document.currentScript.src.match(/.*\//);
     $.getScript(scriptpath + 'ws-ext.js')
         .done( function(ws_ext, textStatus) {
-            let eventTarget = document.createDocumentFragment();
+            var eventTarget = document.createDocumentFragment();
             ws_ext_init(ext_, eventTarget);
             rtrobo_ext_init(ext_);
         });
