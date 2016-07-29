@@ -33,21 +33,20 @@ new (function() {
 	    alert(lang);
 	}
     }
-
     
     var blocks = {
         en: [
-            ['w', '%s にせつぞく', 'connect'],
-            ['w', 'せつだん', 'disconnect'],
-            ['w', 'まえに一歩', 'move_forward'],
-            ['w', 'うしろに一歩', 'move_back'],
-            ['w', '%m.rightLeft に %n 度まわる', 'turn', '右', 90],
-            ['w', 'くっしん', 'bend'],
-            ['w', 'きりつ', 'neutral'],
-            ['w', 'すわる', 'sit_down'],
-            [' ', '%m.hands を %m.upDown', 'move_hand', '右手', 'あげる'],
-            [' ', '%s と言う', 'speak'],
-	    ['b', 'きょりが %n cm より %m.lessMore とき', 'getDistance', 20, '近い'],
+            ['w', 'Connect to %s', 'connect'],
+            ['w', 'Disconnect', 'disconnect'],
+            ['w', 'Step forward', 'move_forward'],
+            ['w', 'Step Backward', 'move_back'],
+            ['w', 'Turn %m.rightLeft %n degree', 'turn', 'Right', 90],
+            ['w', 'Bending', 'bend'],
+            ['w', 'Stand up', 'neutral'],
+            ['w', 'Sit down', 'sit_down'],
+            [' ', 'Move %m.upDown %m.hands', 'move_hand', 'Up', 'Right hand'],
+            [' ', 'say %s', 'speak'],
+	    ['b', 'If distance is %m.lessMore than %n cm', 'getDistance', 'nearer', 20],
         ],
         ja: [
             ['w', '%s にせつぞく', 'connect'],
@@ -63,17 +62,27 @@ new (function() {
 	    ['b', 'きょりが %n cm より %m.lessMore とき', 'getDistance', 20, '近い'],
         ]
     };
-
-    // Block and block menu descriptions
-    let descriptor = {
-        blocks: blocks[lang],
-	menus: {
+    var menus = {
+	en: {
+            rightLeft: ['right', 'left'],
+            hands: ['right hand', 'left hand'],
+            upDown: ['up', 'dowm'],
+            lessMore: ['nearer', 'farther'],
+            eNe: ['=','not =']
+	},
+	ja: {
             rightLeft: ['右', '左'],
             hands: ['右手', '左手'],
             upDown: ['あげる', 'さげる'],
             lessMore: ['近い', '遠い'],
             eNe: ['=','not =']
-	},
+	}
+    };
+
+    // Block and block menu descriptions
+    let descriptor = {
+        blocks: blocks[lang],
+	menus: menus[lang]
     };
 
     let rtrobo_ext_init = function(ext) {
