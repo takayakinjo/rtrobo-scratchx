@@ -30,7 +30,7 @@ new (function() {
 	var pair = vars[i].split('=');
 	if (pair.length > 1 && pair[0]=='lang') {
 	    lang = pair[1];
-//	    alert(lang);
+	    // alert(lang);
 	}
     }
     
@@ -41,12 +41,13 @@ new (function() {
             ['w', 'Step forward', 'move_forward'],
             ['w', 'Step Backward', 'move_back'],
             ['w', 'Turn %m.rightLeft %n degree', 'turn', 'Right', 90],
-            ['w', 'Bending', 'bend'],
+            ['w', 'Bend knees', 'bend'],
             ['w', 'Stand up', 'neutral'],
             ['w', 'Sit down', 'sit_down'],
             [' ', 'Move %m.upDown %m.hands', 'move_hand', 'Up', 'Right hand'],
-            [' ', 'say %s', 'speak', 'hello'],
+            [' ', 'Say %s', 'speak', 'hello'],
 	    ['b', 'If distance is %m.lessMore than %n cm', 'getDistance', 'nearer', 20],
+            [' ', 'Start Camera', 'cameraStart']
         ],
         ja: [
             ['w', '%s にせつぞく', 'connect', 'ws://localhost:9000/rtrobo'],
@@ -97,7 +98,8 @@ new (function() {
         //};
 
 	ext.cameraStart = function() {
-	    window.open("http://www.macchinito.com", "RoboCam", "width=320, height=200, status=yes, scrollbars=no, directories=no, menubar=no, resizable=no, toolbar=no");
+	    //window.open("http://www.macchinito.com", "RoboCam", "width=320, height=200, status=yes, scrollbars=no, directories=no, menubar=no, resizable=no, toolbar=no");
+	    window.open("file://home/kinjo/Work/RtRobo/html/rtrobo.html", "RoboCam", "width=320, height=200, status=yes, scrollbars=no, directories=no, menubar=no, resizable=no, toolbar=no");
 	    /*
 	      width=400
 	      height=200
