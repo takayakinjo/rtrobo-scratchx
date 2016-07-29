@@ -22,9 +22,21 @@ new (function() {
     // Extension name
     let name = 'RtRobo Controller';
 
-    // Block and block menu descriptions
-    let descriptor = {
-        blocks: [
+    // Check for GET param 'lang'
+    var paramString = window.location.search.replace(/^\?|\/$/g, '');
+    var vars = paramString.split("&");
+    var lang = 'en';
+    for (var i=0; i<vars.length; i++) {
+	var pair = vars[i].split('=');
+	if (pair.length > 1 && pair[0]=='lang') {
+	    lang = pair[1];
+	    alert(lang);
+	}
+    }
+
+    
+    var blocks = {
+        en: [
             ['w', '%s にせつぞく', 'connect'],
             ['w', 'せつだん', 'disconnect'],
             ['w', 'まえに一歩', 'move_forward'],
@@ -37,6 +49,24 @@ new (function() {
             [' ', '%s と言う', 'speak'],
 	    ['b', 'きょりが %n cm より %m.lessMore とき', 'getDistance', 20, '近い'],
         ],
+        ja: [
+            ['w', '%s にせつぞく', 'connect'],
+            ['w', 'せつだん', 'disconnect'],
+            ['w', 'まえに一歩', 'move_forward'],
+            ['w', 'うしろに一歩', 'move_back'],
+            ['w', '%m.rightLeft に %n 度まわる', 'turn', '右', 90],
+            ['w', 'くっしん', 'bend'],
+            ['w', 'きりつ', 'neutral'],
+            ['w', 'すわる', 'sit_down'],
+            [' ', '%m.hands を %m.upDown', 'move_hand', '右手', 'あげる'],
+            [' ', '%s と言う', 'speak'],
+	    ['b', 'きょりが %n cm より %m.lessMore とき', 'getDistance', 20, '近い'],
+        ]
+    };
+
+    // Block and block menu descriptions
+    let descriptor = {
+        blocks: blocks[lang],
 	menus: {
             rightLeft: ['右', '左'],
             hands: ['右手', '左手'],
