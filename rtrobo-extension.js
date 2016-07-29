@@ -25,7 +25,7 @@ new (function() {
     // Check for GET param 'lang'
     var paramString = window.location.search.replace(/^\?|\/$/g, '');
     var vars = paramString.split("&");
-    var lang = 'en';
+    var lang = 'ja';
     for (var i=0; i<vars.length; i++) {
 	var pair = vars[i].split('=');
 	if (pair.length > 1 && pair[0]=='lang') {
@@ -60,6 +60,7 @@ new (function() {
             [' ', '%m.hands を %m.upDown', 'move_hand', '右手', 'あげる'],
             [' ', '%s と言う', 'speak', 'こんにちは'],
 	    ['b', 'きょりが %n cm より %m.lessMore とき', 'getDistance', 20, '近い'],
+            [' ', 'カメラきどう', 'cameraStart']
         ]
     };
     var menus = {
@@ -95,6 +96,10 @@ new (function() {
         //    ext.api.send("RRFWD", null);
         //};
 
+	ext.cameraStart = function() {
+	    window.open("http://www.macchinito.com", "RoboCam", "width=320, height=200");
+	}
+	
 	ext.move_forward = function(callback) {
             ext.api.send("RRFWD", null);
 
