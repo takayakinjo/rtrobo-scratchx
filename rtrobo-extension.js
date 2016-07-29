@@ -97,7 +97,17 @@ new (function() {
         //};
 
 	ext.cameraStart = function() {
-	    window.open("http://www.macchinito.com", "RoboCam", "width=320, height=200");
+	    window.open("http://www.macchinito.com", "RoboCam", "width=320, height=200, status=yes, scrollbars=no, directories=no, menubar=no, resizable=no, toolbar=no");
+	    /*
+	      width=400
+	      height=200
+	      status=yes|no
+	      scrollbars=yes|no
+	      directories=yes|no
+	      menubar=yes|no
+	      resizable=yes|no
+	      toolbar=yes|no
+	    */
 	}
 	
 	ext.move_forward = function(callback) {
