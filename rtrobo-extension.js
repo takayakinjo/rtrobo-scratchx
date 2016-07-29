@@ -99,7 +99,7 @@ new (function() {
 
 	ext.cameraStart = function() {
 	    //window.open("http://www.macchinito.com", "RoboCam", "width=320, height=200, status=yes, scrollbars=no, directories=no, menubar=no, resizable=no, toolbar=no");
-	    window.open("file://home/kinjo/Work/RtRobo/html/rtrobo.html", "RoboCam", "width=320, height=200, status=yes, scrollbars=no, directories=no, menubar=no, resizable=no, toolbar=no");
+	    window.open("file://home/kinjo/Work/RtRobo/html/rtrobo.html", "RoboCam", "width=320, height=200");
 	    /*
 	      width=400
 	      height=200
