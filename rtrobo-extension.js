@@ -189,7 +189,10 @@ new (function() {
         };
 
         ext.turn = function(dir, deg, callback) {
-            ext.api.send("RRTURN:"+dir+":"+deg, null);
+	    if (dir == '左' || dir == 'left')
+		deg = -deg;
+
+	    ext.api.send("RRTURN:"+deg, null);
 
 	    checkMsg = function() {
 		if (recvMsg == 'OK') {
