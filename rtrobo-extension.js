@@ -40,6 +40,8 @@ new (function() {
             ['w', 'Disconnect', 'disconnect'],
             ['w', 'Step forward', 'move_forward'],
             ['w', 'Step Backward', 'move_back'],
+            ['w', 'Move %m.legs up', 'leg_up', 'Right leg'],
+            ['w', 'Kick on %m.legs', 'kick', 'Right leg'],
             ['w', 'Turn %m.rightLeft %n degree', 'turn', 'Right', 90],
             ['w', 'Bend knees', 'bend'],
             ['w', 'Stand up', 'neutral'],
@@ -54,13 +56,16 @@ new (function() {
             ['w', 'せつだん', 'disconnect'],
             ['w', 'まえに一歩', 'move_forward'],
             ['w', 'うしろに一歩', 'move_back'],
+            ['w', '%m.legs をあげる', 'leg_up', '右足'],
+            ['w', '%m.legs でキック', 'kick', '右足'],
             ['w', '%m.rightLeft に %n 度まわる', 'turn', '右', 90],
             ['w', 'くっしん', 'bend'],
             ['w', 'きりつ', 'neutral'],
             ['w', 'すわる', 'sit_down'],
             [' ', '%m.hands を %m.upDown', 'move_hand', '右手', 'あげる'],
             [' ', '%s と言う', 'speak', 'こんにちは'],
-	    ['b', 'きょりが %n cm より %m.lessMore とき', 'getDistance', 20, '近い'],
+	    ['r', 'きょりセンサー', 'getDistance'],
+	    ['b', 'きょりが %n cm より %m.lessMore とき', 'checkDistance', 20, '近い'],
             [' ', 'カメラきどう', 'cameraStart']
         ]
     };
@@ -68,6 +73,7 @@ new (function() {
 	en: {
             rightLeft: ['right', 'left'],
             hands: ['Right hand', 'Left hand'],
+            legs: ['Right leg', 'Left leg'],
             upDown: ['up', 'down'],
             lessMore: ['nearer', 'farther'],
             eNe: ['=','not =']
@@ -75,6 +81,7 @@ new (function() {
 	ja: {
             rightLeft: ['右', '左'],
             hands: ['右手', '左手'],
+            legs: ['右足', '左足'],
             upDown: ['あげる', 'さげる'],
             lessMore: ['近い', '遠い'],
             eNe: ['=','not =']
@@ -90,7 +97,8 @@ new (function() {
     var rtrobo_ext_init = function(ext) {
 
 	var recvMsg = '';
-
+	var recvDist = 0;
+	
         //ext.move_forward = function() {
             //var data = {command: 'eject'};
             //ext.api.send(JSON.stringify(data), null);
@@ -173,6 +181,7 @@ new (function() {
 	    checkMsg();
         };
 
+	
         ext.sit_down = function(callback) {
             ext.api.send("RRCTDN", null);
 
@@ -206,6 +215,42 @@ new (function() {
 	    checkMsg();
         };
 
+        ext.kick = function(dir, callback) {
+	    if (dir == '左足' || dir == 'Left leg')
+		ext.api.send("RRKCKL", null);
+	    else
+		ext.api.send("RRKCKR", null);
+
+	    checkMsg = function() {
+		if (recvMsg == 'OK') {
+		    console.log('Got OK');
+		    recvMsg = '';
+		    callback();
+		} else {
+		    setTimeout(function(){checkMsg()}, 100);
+		}
+	    };
+	    checkMsg();
+        };
+
+        ext.leg_up = function(dir, callback) {
+	    if (dir == '左足' || dir == 'Left leg')
+		ext.api.send("RRLUPL", null);
+	    else
+		ext.api.send("RRLUPR", null);
+
+	    checkMsg = function() {
+		if (recvMsg == 'OK') {
+		    console.log('Got OK');
+		    recvMsg = '';
+		    callback();
+		} else {
+		    setTimeout(function(){checkMsg()}, 100);
+		}
+	    };
+	    checkMsg();
+        };
+
         ext.speak = function(string) {
             ext.api.send("RRSPK:" + string, null);
         };
@@ -214,7 +259,11 @@ new (function() {
             ext.api.send("RRHND:" + dir + ":" + upDown, null);
         };
 
-        ext.getDistance = function(dist, lessMore) {
+        ext.getDistance = function() {
+	    return recvDist;
+	};
+
+        ext.checkDistance = function(dist, lessMore) {
 
 	    // TESTCODE
 	    if (dist > 20)
@@ -237,7 +286,10 @@ new (function() {
 
 	    console.log('Received: ' + recv);
 
-	    recvMsg = recv;
+	    if (recv.slice(0, 5) == 'DIST:')
+		recvDist = parseInt(recv.slice(5), 10);
+	    else
+		recvMsg = recv;
 	    
             if(recv.status != undefined) {
 		curr_state = recv.status;
