@@ -49,7 +49,7 @@ new (function() {
             [' ', 'Move %m.upDown %m.hands', 'move_hand', 'Up', 'Right hand'],
             [' ', 'Say %s', 'speak', 'hello'],
 	    ['b', 'If distance is %m.lessMore than %n cm', 'getDistance', 'nearer', 20],
-            [' ', 'Start Camera', 'cameraStart', 'http://localhost:8080/']
+            [' ', 'RoboCam %s', 'cameraStart', 'http://localhost:8080/']
         ],
         ja: [
             ['w', '%s にせつぞく', 'connect', 'ws://localhost:9000/rtrobo'],
@@ -66,7 +66,7 @@ new (function() {
             [' ', '%s と言う', 'speak', 'こんにちは'],
 	    ['r', 'きょりセンサー', 'getDistance'],
 	    ['b', 'きょりが %n cm より %m.lessMore とき', 'checkDistance', 20, '近い'],
-            [' ', 'カメラきどう', 'cameraStart', 'http://localhost:8080/']
+            [' ', 'ロボカメラ %s', 'cameraStart', 'http://localhost:8080/']
         ]
     };
     var menus = {
