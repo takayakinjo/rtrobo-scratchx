@@ -48,7 +48,8 @@ new (function() {
             ['w', 'Sit down', 'sit_down'],
             [' ', 'Move %m.upDown %m.hands', 'move_hand', 'Up', 'Right hand'],
             [' ', 'Say %s', 'speak', 'hello'],
-	    ['b', 'If distance is %m.lessMore than %n cm', 'getDistance', 'nearer', 20],
+	    ['r', 'Distance sensor', 'getDistance'],
+	    ['b', 'If distance is %m.lessMore than %n cm', 'checkDistance', 'nearer', 20],
             [' ', 'RoboCam %s', 'cameraStart', 'http://localhost:8080/']
         ],
         ja: [
