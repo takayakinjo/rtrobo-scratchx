@@ -50,7 +50,7 @@ new (function() {
             [' ', 'Say %s', 'speak', 'hello'],
 	    ['r', 'Distance sensor', 'getDistance'],
 	    ['b', 'If distance is %m.lessMore than %n cm', 'checkDistance', 'nearer', 20],
-            [' ', 'RoboCam %s', 'cameraStart', 'http://localhost:8080/']
+            [' ', 'RoboCam %s', 'cameraStart', 'http://localhost:8080/stream_simple.html']
         ],
         ja: [
             ['w', '%s にせつぞく', 'connect', 'ws://localhost:9000/rtrobo'],
@@ -67,7 +67,7 @@ new (function() {
             [' ', '%s と言う', 'speak', 'こんにちは'],
 	    ['r', 'きょりセンサー', 'getDistance'],
 	    ['b', 'きょりが %n cm より %m.lessMore とき', 'checkDistance', 20, '近い'],
-            [' ', 'ロボカメラ %s', 'cameraStart', 'http://localhost:8080/']
+            [' ', 'ロボカメラ %s', 'cameraStart', 'http://localhost:8080/stream_simple.html']
         ]
     };
     var menus = {
@@ -108,7 +108,7 @@ new (function() {
 
 	ext.cameraStart = function(url) {
 
-	    window.open(url, "RoboCam", "width=640, height=480");
+	    window.open(url, "RoboCam", "width=330, height=250");
 	    /*
 	      width=400
 	      height=200
