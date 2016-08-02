@@ -49,7 +49,7 @@ new (function() {
             [' ', 'Move %m.upDown %m.hands', 'move_hand', 'Up', 'Right hand'],
             [' ', 'Say %s', 'speak', 'hello'],
 	    ['b', 'If distance is %m.lessMore than %n cm', 'getDistance', 'nearer', 20],
-            [' ', 'Start Camera', 'cameraStart']
+            [' ', 'Start Camera', 'cameraStart', 'http://localhost:8080/']
         ],
         ja: [
             ['w', '%s にせつぞく', 'connect', 'ws://localhost:9000/rtrobo'],
@@ -66,7 +66,7 @@ new (function() {
             [' ', '%s と言う', 'speak', 'こんにちは'],
 	    ['r', 'きょりセンサー', 'getDistance'],
 	    ['b', 'きょりが %n cm より %m.lessMore とき', 'checkDistance', 20, '近い'],
-            [' ', 'カメラきどう', 'cameraStart']
+            [' ', 'カメラきどう', 'cameraStart', 'http://localhost:8080/']
         ]
     };
     var menus = {
@@ -105,9 +105,9 @@ new (function() {
         //    ext.api.send("RRFWD", null);
         //};
 
-	ext.cameraStart = function() {
-	    //window.open("http://www.macchinito.com", "RoboCam", "width=320, height=200, status=yes, scrollbars=no, directories=no, menubar=no, resizable=no, toolbar=no");
-	    window.open("http://www.macchinito.com/rtrobo/rtrobo.html", "RoboCam", "width=320, height=200");
+	ext.cameraStart = function(url) {
+
+	    window.open(url, "RoboCam", "width=640, height=480");
 	    /*
 	      width=400
 	      height=200
@@ -265,12 +265,17 @@ new (function() {
 
         ext.checkDistance = function(dist, lessMore) {
 
-	    // TESTCODE
-	    if (dist > 20)
-		return true;
-	    else
-		return false;
-	    
+	    if (lessMore == '近い' || lessMore == 'nearer') {
+		if (recvDist < dist)
+		    return true;
+		else
+		    return false;
+	    } else {
+		if (recvDist > dist)
+		    return true;
+		else
+		    return false;
+	    }
 	};
 
 	var prev_state = '';
