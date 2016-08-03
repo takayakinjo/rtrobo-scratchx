@@ -36,7 +36,7 @@ new (function() {
     
     var blocks = {
         en: [
-            ['w', 'Connect to %s', 'connect', 'ws://rtrobo.local:9000/rtrobo'],
+            ['w', 'Connect to %s', 'connect', 'rtrobo.local'],
             ['w', 'Disconnect', 'disconnect'],
             ['w', 'Step forward', 'move_forward'],
             ['w', 'Step Backward', 'move_back'],
@@ -52,10 +52,10 @@ new (function() {
             [' ', 'Say %s', 'speak', 'hello'],
 	    ['r', 'Distance sensor', 'getDistance'],
 	    ['b', 'If distance is %m.lessMore than %n cm', 'checkDistance', 'nearer', 20],
-            [' ', 'RoboCam %s', 'cameraStart', 'http://rtrobo.local:8080/stream_simple.html']
+            [' ', 'RoboCam %s', 'cameraStart', 'rtrobo.local']
         ],
         ja: [
-            ['w', '%s にせつぞく', 'connect', 'ws://rtrobo.local:9000/rtrobo'],
+            ['w', '%s にせつぞく', 'connect', 'rtrobo.local'],
             ['w', 'せつだん', 'disconnect'],
             ['w', 'まえに一歩', 'move_forward'],
             ['w', 'うしろに一歩', 'move_back'],
@@ -71,7 +71,7 @@ new (function() {
             [' ', '%s と言う', 'speak', 'こんにちは'],
 	    ['r', 'きょりセンサー', 'getDistance'],
 	    ['b', 'きょりが %n cm より %m.lessMore とき', 'checkDistance', 20, '近い'],
-            [' ', 'ロボカメラ %s', 'cameraStart', 'http://rtrobo.local:8080/stream_simple.html']
+            [' ', 'ロボカメラ %s', 'cameraStart', 'rtrobo.local']
         ]
     };
     var menus = {
@@ -112,7 +112,7 @@ new (function() {
 
 	ext.cameraStart = function(url) {
 
-	    window.open(url, "RoboCam", "width=660, height=500");
+	    window.open('http://'+url+':8080/stream_simple.html', "RoboCam", "width=660, height=500");
 	    /*
 	      width=400
 	      height=200

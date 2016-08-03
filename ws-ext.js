@@ -102,7 +102,10 @@ function ws_ext_init(ext, emitter) {
     // Connect and disconnect
 
     ext.connect = function(_url, callback) {
-        console.log("ext.connect: %s %O", _url, callback);
+
+	_url = 'ws://'+_url+':9000/rtrobo';
+
+	console.log("ext.connect: %s %O", _url, callback);
         if(_url in ws_conn) {
             console.log("ext.connect: %s readyState:%d", _url, ws_conn[_url].readyState);
             switch(ws_conn[_url].readyState) {
