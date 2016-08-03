@@ -192,7 +192,7 @@ function ws_ext_init(ext, emitter) {
                 ws.close_status_ = event.code;
                 ws.close_reason_ = reason;
 
-                status_.status = 1;
+                status_.status = 0;
                 status_.msg = ws_conn.getErrorReason();
 
                 if(!callbacked) {
