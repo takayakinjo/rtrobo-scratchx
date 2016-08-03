@@ -46,7 +46,9 @@ new (function() {
             ['w', 'Bend knees', 'bend'],
             ['w', 'Stand up', 'neutral'],
             ['w', 'Sit down', 'sit_down'],
+            ['w', 'Dance', 'dance'],
             [' ', 'Move %m.upDown %m.hands', 'move_hand', 'Up', 'Right hand'],
+            [' ', 'Punch on %m.hands', 'punch', 'Right hand'],
             [' ', 'Say %s', 'speak', 'hello'],
 	    ['r', 'Distance sensor', 'getDistance'],
 	    ['b', 'If distance is %m.lessMore than %n cm', 'checkDistance', 'nearer', 20],
@@ -63,7 +65,9 @@ new (function() {
             ['w', 'くっしん', 'bend'],
             ['w', 'きりつ', 'neutral'],
             ['w', 'すわる', 'sit_down'],
+            ['w', 'ダンス', 'dance'],
             [' ', '%m.hands を %m.upDown', 'move_hand', '右手', 'あげる'],
+            [' ', '%m.hands でパンチ', 'punch', '右手'],
             [' ', '%s と言う', 'speak', 'こんにちは'],
 	    ['r', 'きょりセンサー', 'getDistance'],
 	    ['b', 'きょりが %n cm より %m.lessMore とき', 'checkDistance', 20, '近い'],
@@ -198,6 +202,21 @@ new (function() {
 	    checkMsg();
         };
 
+        ext.dance = function(callback) {
+            ext.api.send("RRDNCE", null);
+
+	    checkMsg = function() {
+		if (recvMsg == 'OK') {
+		    console.log('Got OK');
+		    recvMsg = '';
+		    callback();
+		} else {
+		    setTimeout(function(){checkMsg()}, 100);
+		}
+	    };
+	    checkMsg();
+        };
+
         ext.turn = function(dir, deg, callback) {
 	    if (dir == '左' || dir == 'left')
 		deg = -deg;
@@ -258,6 +277,13 @@ new (function() {
 
         ext.move_hand = function(dir, upDown) {
             ext.api.send("RRHND:" + dir + ":" + upDown, null);
+        };
+
+        ext.punch = function(dir) {
+	    if (dir == '左手' || dir == 'Left hand')
+		ext.api.send("RRPNCL", null);
+	    else
+		ext.api.send("RRPNCR", null);
         };
 
         ext.getDistance = function() {
