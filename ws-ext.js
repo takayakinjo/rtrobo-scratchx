@@ -20,8 +20,8 @@ function ws_ext_init(ext, emitter) {
     let ws_conn = {};
     let received_events = [];
     let received_events_length = 20;
-    let timeout_duration = 1000;
-    let status_ = {status: 2, msg: 'Ready'};
+    let timeout_duration = 5000;
+    let status_ = {status: 1, msg: 'ReadyX'};
 
     ext.api = {};
 

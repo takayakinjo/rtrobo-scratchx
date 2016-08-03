@@ -184,7 +184,7 @@ new (function() {
 
 	
         ext.sit_down = function(callback) {
-            ext.api.send("RRCTDN", null);
+            ext.api.send("RRSTDN", null);
 
 	    checkMsg = function() {
 		if (recvMsg == 'OK') {
