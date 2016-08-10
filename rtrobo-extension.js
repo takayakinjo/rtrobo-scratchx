@@ -77,7 +77,7 @@ new (function() {
 	    ['r', 'きょりセンサー', 'getDistance'],
 	    ['r', '前後かたむきセンサー', 'getFBslope'],
 	    ['r', '左右かたむきセンサー', 'getLRslope'],
-	    ['r', 'じょうたい %s', 'getStatus', '  '],
+	    ['r', 'じょうたい', 'getStatus'],
 	    ['h', 'きょりが %n cm より %m.lessMore とき', 'checkDistance', 20, '近い'],
 	    ['h', '%m.fourWay にかたむいたとき', 'checkSlope', '前']
         ]
@@ -325,8 +325,8 @@ new (function() {
 	    return slopeLR;
 	};
 
-        ext.getStatus = function(str) {
-	    return str;
+        ext.getStatus = function() {
+	    return '<img src="http://www.macchinito.com/rtklogo.png">';
 	};
 
         ext.checkDistance = function(dist, lessMore) {
