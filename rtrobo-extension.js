@@ -37,6 +37,7 @@ new (function() {
     var blocks = {
         en: [
             ['w', 'Connect to %s', 'connect', 'rtrobo.local'],
+            [' ', 'RoboCam %s', 'cameraStart', 'rtrobo.local'],
             ['w', 'Disconnect', 'disconnect'],
             ['w', 'Step forward', 'move_forward'],
             ['w', 'Step Backward', 'move_back'],
@@ -51,11 +52,15 @@ new (function() {
             [' ', 'Punch on %m.hands', 'punch', 'Right hand'],
             [' ', 'Say %s', 'speak', 'hello'],
 	    ['r', 'Distance sensor', 'getDistance'],
+	    ['r', 'Forward/back slope sensor', 'getFBslope'],
+	    ['r', 'Left/right slope sensor', 'getLRslope'],
+	    ['r', 'Distance sensor', 'getDistance'],
 	    ['b', 'If distance is %m.lessMore than %n cm', 'checkDistance', 'nearer', 20],
-            [' ', 'RoboCam %s', 'cameraStart', 'rtrobo.local']
+	    ['h', 'If lean on %m.fourWay', 'checkSlope', 'Forward']
         ],
         ja: [
-            ['w', '%s にせつぞく', 'connect', 'rtrobo.local'],
+            ['w', 'ロボせつぞく %s', 'connect', 'rtrobo.local'],
+            [' ', 'ロボカメラ %s', 'cameraStart', 'rtrobo.local'],
             ['w', 'せつだん', 'disconnect'],
             ['w', 'まえに一歩', 'move_forward'],
             ['w', 'うしろに一歩', 'move_back'],
@@ -70,8 +75,10 @@ new (function() {
             [' ', '%m.hands でパンチ', 'punch', '右手'],
             [' ', '%s と言う', 'speak', 'こんにちは'],
 	    ['r', 'きょりセンサー', 'getDistance'],
+	    ['r', '前後かたむきセンサー', 'getFBslope'],
+	    ['r', '左右かたむきセンサー', 'getLRslope'],
 	    ['b', 'きょりが %n cm より %m.lessMore とき', 'checkDistance', 20, '近い'],
-            [' ', 'ロボカメラ %s', 'cameraStart', 'rtrobo.local']
+	    ['h', '%m.fourWay にかたむいたとき', 'checkSlope', '前']
         ]
     };
     var menus = {
@@ -81,6 +88,7 @@ new (function() {
             legs: ['Right leg', 'Left leg'],
             upDown: ['up', 'down'],
             lessMore: ['nearer', 'farther'],
+	    fourWay: ['Forward', 'Back', 'Right', 'Left'],
             eNe: ['=','not =']
 	},
 	ja: {
@@ -89,6 +97,7 @@ new (function() {
             legs: ['右足', '左足'],
             upDown: ['あげる', 'さげる'],
             lessMore: ['近い', '遠い'],
+	    fourWay: ['前', '後', '右', '左'],
             eNe: ['=','not =']
 	}
     };
@@ -103,6 +112,8 @@ new (function() {
 
 	var recvMsg = '';
 	var recvDist = 0;
+	var slopeFB = 0;
+	var slopeLR = 0;
 	
         //ext.move_forward = function() {
             //var data = {command: 'eject'};
@@ -290,6 +301,14 @@ new (function() {
 	    return recvDist;
 	};
 
+        ext.getFBslope = function() {
+	    return slopeFB;
+	};
+
+        ext.getLRslope = function() {
+	    return slopeLR;
+	};
+
         ext.checkDistance = function(dist, lessMore) {
 
 	    if (lessMore == '近い' || lessMore == 'nearer') {
@@ -303,6 +322,24 @@ new (function() {
 		else
 		    return false;
 	    }
+	};
+
+        ext.checkSlope = function(dir) {
+
+	    if (dir == '前' || dir == 'Forward') {
+		if (slopeFB > 10) return true;
+		else return false;
+	    } else if (dir == '後' || dir == 'Back') {
+		if (slopeFB < -10) return true;
+		else return false;
+	    } else if (dir == '右' || dir == 'Right') {
+		if (slopeLR > 10) return true;
+		else return false;
+	    } else if (dir == '左' || dir == 'Left') {
+		if (slopeLR < -10) return true;
+		else return false;
+	    } else return false;
+
 	};
 
 	var prev_state = '';
@@ -320,6 +357,10 @@ new (function() {
 
 	    if (recv.slice(0, 5) == 'DIST:')
 		recvDist = parseInt(recv.slice(5), 10);
+	    else if (recv.slice(0, 8) == 'SLOPEFB:')
+		slopeFB = parseInt(recv.slice(8), 13);
+	    else if (recv.slice(0, 8) == 'SLOPELR:')
+		slopeLR = parseInt(recv.slice(8), 13);
 	    else
 		recvMsg = recv;
 	    
