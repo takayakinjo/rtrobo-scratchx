@@ -77,7 +77,7 @@ new (function() {
 	    ['r', 'きょりセンサー', 'getDistance'],
 	    ['r', '前後かたむきセンサー', 'getFBslope'],
 	    ['r', '左右かたむきセンサー', 'getLRslope'],
-	    ['r', 'じょうたい', 'getStatus'],
+	    ['r', 'じょうたい %s', 'getStatus', '  '],
 	    ['h', 'きょりが %n cm より %m.lessMore とき', 'checkDistance', 20, '近い'],
 	    ['h', '%m.fourWay にかたむいたとき', 'checkSlope', '前']
         ]
@@ -325,8 +325,8 @@ new (function() {
 	    return slopeLR;
 	};
 
-        ext.getStatus = function() {
-	    return '元気';
+        ext.getStatus = function(str) {
+	    return str;
 	};
 
         ext.checkDistance = function(dist, lessMore) {
