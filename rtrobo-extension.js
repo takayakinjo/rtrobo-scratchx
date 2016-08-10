@@ -54,8 +54,8 @@ new (function() {
 	    ['r', 'Distance sensor', 'getDistance'],
 	    ['r', 'Forward/back slope sensor', 'getFBslope'],
 	    ['r', 'Left/right slope sensor', 'getLRslope'],
-	    ['r', 'Distance sensor', 'getDistance'],
-	    ['b', 'If distance is %m.lessMore than %n cm', 'checkDistance', 'nearer', 20],
+	    ['r', 'Status', 'getStatus'],
+	    ['h', 'If distance is %m.lessMore than %n cm', 'checkDistance', 'nearer', 20],
 	    ['h', 'If lean on %m.fourWay', 'checkSlope', 'Forward']
         ],
         ja: [
@@ -77,7 +77,8 @@ new (function() {
 	    ['r', 'きょりセンサー', 'getDistance'],
 	    ['r', '前後かたむきセンサー', 'getFBslope'],
 	    ['r', '左右かたむきセンサー', 'getLRslope'],
-	    ['b', 'きょりが %n cm より %m.lessMore とき', 'checkDistance', 20, '近い'],
+	    ['r', 'じょうたい', 'getStatus'],
+	    ['h', 'きょりが %n cm より %m.lessMore とき', 'checkDistance', 20, '近い'],
 	    ['h', '%m.fourWay にかたむいたとき', 'checkSlope', '前']
         ]
     };
@@ -322,6 +323,10 @@ new (function() {
 
         ext.getLRslope = function() {
 	    return slopeLR;
+	};
+
+        ext.getStatus = function() {
+	    return '元気';
 	};
 
         ext.checkDistance = function(dist, lessMore) {
