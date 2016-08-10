@@ -84,7 +84,7 @@ new (function() {
     var menus = {
 	en: {
             rightLeft: ['right', 'left'],
-            hands: ['Right hand', 'Left hand'],
+            hands: ['Right hand', 'Left hand', 'Both hands'],
             legs: ['Right leg', 'Left leg'],
             upDown: ['up', 'down'],
             lessMore: ['nearer', 'farther'],
@@ -93,7 +93,7 @@ new (function() {
 	},
 	ja: {
             rightLeft: ['右', '左'],
-            hands: ['右手', '左手'],
+            hands: ['右手', '左手', '両手'],
             legs: ['右足', '左足'],
             upDown: ['あげる', 'さげる'],
             lessMore: ['近い', '遠い'],
@@ -287,14 +287,29 @@ new (function() {
         };
 
         ext.move_hand = function(dir, upDown) {
-            ext.api.send("RRHND:" + dir + ":" + upDown, null);
+	    var ldir = '';
+	    var lupDown = '';
+	    
+	    if (dir == '右手' || dir == 'Right hand')
+		ldir = 'R';
+	    else if (dir == '左手' || dir == 'Left hand')
+		ldir = 'L';
+	    else
+		ldir = 'B';
+	    if (upDown == 'あげる' || upDown == 'up')
+		lupDown = 'U';
+	    else
+		lupDown = 'D';
+            ext.api.send("RRHND:" + ldir + lupDown, null);
         };
 
         ext.punch = function(dir) {
-	    if (dir == '左手' || dir == 'Left hand')
+	    if (dir == '右手' || dir == 'Right hand')
+		ext.api.send("RRPNCR", null);
+	    else if (dir == '左手' || dir == 'Left hand')
 		ext.api.send("RRPNCL", null);
 	    else
-		ext.api.send("RRPNCR", null);
+		ext.api.send("RRPNCB", null);
         };
 
         ext.getDistance = function() {
